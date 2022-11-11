@@ -1,0 +1,4 @@
+# carpetas o archivos ignorados apra no subir a GIT
+#dependencias node
+node_modules
+
