@@ -24,8 +24,8 @@ app.get("/", (req, res) => {
 app.get("/v1/menu", (req, res) => {
   // trae todo el menu
   
-  response.json(menu);
-  res.status(200).send("GET menu");
+  res.json(menu);
+  //res.status(200).send("GET menu");
   console.log(req.method, req.path);
 });
 
