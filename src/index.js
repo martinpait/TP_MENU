@@ -68,7 +68,7 @@ app.post("/v1/menu", async (req, res) => {
   try {
     const menu = Menu(req.body);
     const menuSave = await menu.save();
-    res.status(201).json({
+    res.status(200).json({
       status: "Se guardo el plato",
       data: menuSave,
     });
@@ -83,13 +83,16 @@ app.post("/v1/menu", async (req, res) => {
 //Modificar un plato del menu
 app.patch("/v1/menu/:cod_plato", async (req, res) => {
   try {
-    //const menu = await Menu.update({cod_plato: req.params.cod_plato}, {req.body});
-    const menu = await Menu.find({ categoria: req.params.categoria });
-    menu = Menu(reg.body);
-    const menuSave = await menu.save();
+    let body = req.body;
+    const menuUpdate = await Menu.updateOne(
+      { cod_plato: req.params.cod_plato },
+      {
+        $set: req.body,
+      }
+    );
     res.status(200).json({
-      status: menuSave ? "Se actualizo el plato" : "No existe el plato",
-      data: menuSave,
+      status: menuUpdate ? "Se actualizo el plato" : "No existe el plato",
+      data: menuUpdate,
     });
   } catch (error) {
     res.status(404).json({
