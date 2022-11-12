@@ -17,7 +17,7 @@ app.get("/", (req, res, next) => {
 
 // rutas de la API
 //Listar todos los platos del menu
-app.get("/v1/menu", async (req, res ) => {
+app.get("/v1/menu", async (req, res) => {
   try {
     const menuList = await Menu.find();
     res.status(200).json({
@@ -25,24 +25,30 @@ app.get("/v1/menu", async (req, res ) => {
       data: menuList,
     });
   } catch (error) {
-    res.status(404).json({
-      status: "No hay menu",
+    res.status(500).json({
+      status: "Error",
       message: error.message,
     });
   }
 });
 
-//Traer un  plato por codigo
+//Traer un plato por codigo
 app.get("/v1/menu/:cod_plato", async (req, res) => {
   try {
-    const menu = await Menu.findOne({ cod_plato: req.params.cod_plato });
-    res.status(200).json({
-      status: menu ? "Plato encontrado con exito" : "Plato no encontrado",
+    const menu = await Menu.findOne({
+      cod_plato: req.params.cod_plato,
+    });
+    menu
+      ? ((statusCode = 200), (statusMesssage = "Plato encontrado con exito"))
+      : ((statusCode = 404), (statusMesssage = "Plato no encontrado"));
+    
+    res.status(statusCode).json({
+      status: statusMesssage,
       data: menu,
     });
   } catch (error) {
-    res.status(404).json({
-      status: "No existe el Plato",
+    res.status(500).json({
+      status: "Error",
       message: error.message,
     });
   }
@@ -51,14 +57,20 @@ app.get("/v1/menu/:cod_plato", async (req, res) => {
 //Listar platos por categoria
 app.get("/v1/menu/category/:categoria", async (req, res) => {
   try {
-    const menu = await Menu.find({ categoria: req.params.categoria });
-    res.status(200).json({
-      status: menu ? "Categoria encontrada con exito" : "No existe la Categoria",
+    const menu = await Menu.find({
+      categoria: req.params.categoria,
+    });
+    menu
+      ? ((statusCode = 200), (statusMesssage = "Categoria encontrada con exito"))
+      : ((statusCode = 404), (statusMesssage = "Categoria no encontrado"));
+    
+    res.status(statusCode).json({
+      status: statusMesssage,
       data: menu,
     });
   } catch (error) {
-    res.status(404).json({
-      status: "No existe la Categoria",
+    res.status(500).json({
+      status: "Error",
       message: error.message,
     });
   }
@@ -74,8 +86,8 @@ app.post("/v1/menu", async (req, res) => {
       data: menuSave,
     });
   } catch (error) {
-    res.status(404).json({
-      status: "Error no se pudo crear",
+    res.status(500).json({
+      status: "Error",
       message: error.message,
     });
   }
@@ -84,21 +96,25 @@ app.post("/v1/menu", async (req, res) => {
 //Modificar un plato del menu
 app.patch("/v1/menu/:cod_plato", async (req, res) => {
   try {
-    let body = req.body;
-    const menuUpdate = await Menu.findOneAndUpdate(
+    const menu = await Menu.findOneAndUpdate(
       { cod_plato: req.params.cod_plato },
       {
         $set: req.body,
-      }
+      },
+      { new: true }
     );
-    res.status(200).json({
-      status:  "Se actualizo el plato con exito",
-      data: menuUpdate,
-    });
+    menu
+    ? ((statusCode = 200), (statusMesssage = "Plato actualizado con exito"))
+    : ((statusCode = 404), (statusMesssage = "Plato no encontrado"));
+  
+  res.status(statusCode).json({
+    status: statusMesssage,
+    data: menu,
+  });
   } catch (error) {
-    res.status(404).json({
-      status: "No existe el plato para actualizar",
-      message: error,
+    res.status(500).json({
+      status: "Error ",
+      message: error.message,
     });
   }
 });
@@ -106,14 +122,20 @@ app.patch("/v1/menu/:cod_plato", async (req, res) => {
 //Eliminar un Plato del menu
 app.delete("/v1/menu/:cod_plato", async (req, res) => {
   try {
-    const menu = await Menu.findOneAndDelete({ cod_plato: req.params.cod_plato });
-    res.status(200).json({
-      status: menu ? "Se elimino el plato con exito" : "No existe el plato",
-      data: menu,
+    const menu = await Menu.findOneAndDelete({
+      cod_plato: req.params.cod_plato,
     });
+    menu
+    ? ((statusCode = 200), (statusMesssage = "Plato eliminado con exito"))
+    : ((statusCode = 404), (statusMesssage = "Plato no encontrado"));
+  
+  res.status(statusCode).json({
+    status: statusMesssage,
+    data: menu,
+  });
   } catch (error) {
-    res.status(404).json({
-      status: "No se existe el plato a eliminar",
+    res.status(500).json({
+      status: "Error",
       message: error,
     });
   }
@@ -121,7 +143,7 @@ app.delete("/v1/menu/:cod_plato", async (req, res) => {
 
 //Respuesta si se pone un metodo que no existe
 app.use((req, res, next) => {
-  res.status(404).send("No existe el metodo")
+  res.status(400).send("No existe el metodo");
 });
 
 //puerto donde levanta el servidor
