@@ -62,7 +62,7 @@ app.get("/v1/menu/category/:categoria", async (req, res) => {
     });
     menu
       ? ((statusCode = 200), (statusMesssage = "Categoria encontrada con exito"))
-      : ((statusCode = 404), (statusMesssage = "Categoria no encontrado"));
+      : ((statusCode = 404), (statusMesssage = "Categoria no encontrada"));
     
     res.status(statusCode).json({
       status: statusMesssage,
@@ -136,7 +136,7 @@ app.delete("/v1/menu/:cod_plato", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "Error",
-      message: error,
+      message: error.message,
     });
   }
 });

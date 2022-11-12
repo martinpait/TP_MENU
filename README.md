@@ -78,6 +78,14 @@
   }
 
     #### **Mensaje de error**
+    Error: 404
+      {
+        "status": "Plato no encontrado",
+        "data": null
+      }
+    
+    Error: 500
+      Captura mensaje de error del sistema
 
 3. **Obtener una lista de platos por categoría**
     #### **HTTP method**
@@ -120,7 +128,8 @@
   }
 
     #### **Mensaje de error**
-
+      Error: 500
+      Captura mensaje de error del sistema
 
 4. **Dar de alta un nuevo plato**
     #### **HTTP method**
@@ -160,6 +169,14 @@
   }
 
     #### **Mensaje de error**
+    Error: 500
+      Captura mensaje de error del sistema
+      Ejemplo:
+
+      {
+        "status": "Error",
+        "message": "E11000 duplicate key error collection: menu-bar.menus index: cod_plato_1 dup key: { cod_plato: \"EMPCAR\" }"
+      }
 
 5. **Modificar algun dato de un plato según el codigo**
     #### **HTTP method**
