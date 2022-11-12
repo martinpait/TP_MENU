@@ -48,7 +48,8 @@
       "status": "Listado de platos"
     }
     #### **Mensaje de error**
-
+    Error: 500
+      Captura mensaje de error del sistema
 2. **Obtener un plato según el codigo**
     #### **HTTP method**
           GET
@@ -208,7 +209,16 @@
   },
     "status": "Se actualizo el plato con exito"
 } 
-    #### **Mensaje de error**
+
+  #### **Mensaje de error**
+     Error: 404
+      {
+        "status": "Plato no encontrado",
+        "data": null
+      }
+    
+    Error: 500
+      Captura mensaje de error del sistema
 
 6. **Eliminar un  plato por el codigo**
     #### **HTTP method**
@@ -223,7 +233,6 @@
 
       response:
         Status: 200 OK
-
     {
         "data": {
             "_id": "636fb826b0f433c1db3dff6e",
@@ -240,7 +249,15 @@
     }
 
     #### **Mensaje de error**
-
+       Error: 404
+      {
+        "status": "Plato no encontrado",
+        "data": null
+      }
+    
+    Error: 500
+      Captura mensaje de error del sistema
+      
 ### **Modelo de la BD MONGO**
 	cod_plato: {
       type: String,
