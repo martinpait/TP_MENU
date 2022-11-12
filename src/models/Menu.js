@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
-const platoSchema = Schema(
+const MenuSchema = new Schema(
   {
     cod_plato: {
       type: String,
@@ -38,4 +38,4 @@ const platoSchema = Schema(
   }
 );
 
-export default model("Plato", platoSchema);
+module.exports =  model("Menu", MenuSchema);

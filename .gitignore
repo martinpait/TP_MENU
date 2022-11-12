@@ -2,3 +2,5 @@
 #dependencias node
 node_modules
 
+#import de mongo
+manifest.json

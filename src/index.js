@@ -1,60 +1,118 @@
-//import { Plato } from '/models/Plato'
 
-const { json, response } = require("express");
+// dependencias
 const express = require("express");
 const db = require("./database");
+const morgan = require("morgan");
+const Menu = require("./models/Menu");
 
 const app = express();
 
-const menu = [
-    {cod_plato: "EMC", nombre: "Empanada de carne", descripcion: "Empanada de carne Frita", precio: 200, categoria: "Entrada", activo: true},
-    {cod_plato: "TP", nombre: "Tortilla", descripcion: "Tortilla de papa y cebolla", precio: 500, categoria: "Entrada", activo: true},
-    {cod_plato: "TE", nombre: "Tortilla Española", descripcion: "Tortilla de papa, cebolla y chorizo colorado", precio: 700, categoria: "Entrada", activo: true},
-    {cod_plato: "BU", nombre: "Buñuelos", descripcion: "Buñuelos de Acelga", precio: 400, categoria: "Entrada", activo: true},
-    {cod_plato: "SMC", nombre: "Sandwich de Milanesa", descripcion: "Sandwich de Milanesa de carne", precio: 1500, categoria: "Principal", activo: true},
-    {cod_plato: "SMP", nombre: "Sandwich de Milanesa de Pollo", descripcion: "Sandwich de Milanesa de pollo", precio: 1400, categoria: "Principal", activo: false},
-    {cod_plato: "VI", nombre: "Vigilante", descripcion: "Queso fresco y Dulce de Batata", precio: 300, categoria: "Postre", activo: true},
-    {cod_plato: "FL", nombre: "Flan", descripcion: "Flan cacero", precio: 400, categoria: "Postre", activo: true},
-];
+app.use(express.json());
+app.use(morgan("dev"));
 
+//Default
 app.get("/", (req, res) => {
   res.send("Menu bar....");
 });
 
-app.get("/v1/menu", (req, res) => {
-  // trae todo el menu
-  
-  res.json(menu);
-  //res.status(200).send("GET menu");
-  console.log(req.method, req.path);
+// rutas de la API
+//Listar todos los platos del menu
+app.get("/v1/menu", async (req, res) => {
+  try {
+    const menuList = await Menu.find();
+    res.status(200).json({
+      status: "Listado de platos",
+      data: menuList,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "No hay menu",
+      message: error.message,
+    });
+  }
 });
 
-app.get("/v1/menu/:id", (req, res) => {
-  res.status(200).send("GET menu por id");
-  console.log(req.method, req.path);
+//Traer un solo plato
+app.get("/v1/menu/:id", async (req, res) => {
+  try {
+    const menu = await Menu.findById(req.params.id);
+    res.status(200).json({
+      status: menu ? "Plato encontrado" : 'Plato no existe',
+      data: menu,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "No existe el Plato",
+      message: error.message,
+    });
+  }
 });
 
-app.get("/v1/menu/:category", (req, res) => {
-  res.status(200).send("GET menu por categoria");
-  console.log(req.method, req.path);
+//Listar platos por categoria
+app.get("/v1/menu/category/:category", async (req, res) => {
+  try {
+    const menu = await Menu.findById(req.params.category);
+    res.status(200).json({
+      status: menu ? "Categoria encontrada" : 'No existe la Categoria',
+      data: menu,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "No existe la Categoria",
+      message: error.message,
+    });
+  }
 });
 
+//Agregar un plato al menu
 app.post("/v1/menu", async (req, res) => {
-  const plato = json;
-  const savePlato = await plato.save();
-
-  res.status(201).send("Plato Agregado");
-  console.log(req.method, req.path); 
+  try {
+    const menu = Menu(req.body);
+    const menuSave = await menu.save();
+    res.status(201).json({
+      status: "Se guardo el plato",
+      data: menuSave,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "Error no se pudo guardar",
+      message: error.message,
+    });
+  }
 });
 
-app.patch("/v1/menu/:id", (req, res) => {
-  res.status(200).send("PATCH plato por id");
-  console.log(req.method, req.path);
+//Modificar un plato del menu
+app.patch("/v1/menu/:id", async (req, res) => {
+  try {
+    const menu = await Menu.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).json({
+      status: menu ? "Se actualizo el plato" : "No existe el plato",
+      data: menu,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "No se existe el plato para actualizar",
+      message: error,
+    });
+  }
 });
 
-app.delete("/v1/menu/:id", (req, res) => {
-  res.status(200).send("DELETE plato por id");
-  console.log(req.params.id);
+//Eliminar un Plato del menu
+app.delete("/v1/menu/:id", async (req, res) => {
+  try {
+    const menu = await Menu.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+        status: menu ? "Se elimino el plato" : "No existe el plato",
+        data: menu,
+      });
+  } catch (error) {
+    res.status(404).json({
+      status: "No se existe el plato a eliminar",
+      message: error,
+    });
+  }
 });
 
 //puerto donde levanta el servidor
