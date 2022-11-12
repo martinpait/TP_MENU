@@ -9,11 +9,11 @@
 ### **Apis desarrolladas**
 1. **Obtener una lista de todos los platos**
     #### **HTTP method**
-      GET
+          GET
     #### **URI relativo**
-      /v1/menu
+          /v1/menu
     #### **Detalle de la API**
-      Se lista todos los registros de la base
+          Se lista todos los registros de la base
     #### **Ejemplo de request y response**
       request:
         curl --location --request GET 'localhost:3000/v1/menu'
@@ -51,11 +51,11 @@
 
 2. **Obtener un plato según el codigo**
     #### **HTTP method**
-      GET
+          GET
     #### **URI relativo**
-      /v1/menu/:cod_plat
+          /v1/menu/:cod_plat
     #### **Detalle de la API**
-      Se lista el plato de la base segun el codigo del mismo
+          Se lista el plato de la base segun el codigo del mismo
     #### **Ejemplo de request y response**
       request:
         curl --location --request GET 'localhost:3000/v1/menu/TORCOM'
@@ -124,7 +124,7 @@
 
 4. **Dar de alta un nuevo plato**
     #### **HTTP method**
-      POST
+        POST
     #### **URI relativo**
       /v1/menu/
     #### **Detalle de la API**
@@ -163,7 +163,7 @@
 
 5. **Modificar algun dato de un plato según el codigo**
     #### **HTTP method**
-      PATCH
+        PATCH
     #### **URI relativo**
       /v1/menu/:cod_plat
     #### **Detalle de la API**
@@ -176,8 +176,7 @@
                         "activo": false
                       }'
       response:
-        Status: 200 OK
-      
+        Status: 200 OK      
  {
     "data": {
         "_id": "6370047dab4eb0b44833342d",
@@ -192,16 +191,15 @@
   },
     "status": "Se actualizo el plato con exito"
 } 
-
     #### **Mensaje de error**
 
 6. **Eliminar un  plato por el codigo**
     #### **HTTP method**
-      DELETE
+          DELETE
     #### **URI relativo**
-      /v1/menu/:cod_plat
+          /v1/menu/:cod_plat
     #### **Detalle de la API**
-      Se elimina el plato de la base segun el codigo del mismo
+          Se elimina el plato de la base segun el codigo del mismo
     #### **Ejemplo de request y response**
       request:
         curl --location --request DELETE 'localhost:3000/v1/menu/TORCOM'
