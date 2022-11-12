@@ -1,4 +1,3 @@
-
 // dependencias
 const express = require("express");
 const db = require("./database");
@@ -33,11 +32,11 @@ app.get("/v1/menu", async (req, res) => {
 });
 
 //Traer un solo plato
-app.get("/v1/menu/:id", async (req, res) => {
+app.get("/v1/menu/:cod_plato", async (req, res) => {
   try {
-    const menu = await Menu.findById(req.params.id);
+    const menu = await Menu.findOne({ cod_plato: req.params.cod_plato });
     res.status(200).json({
-      status: menu ? "Plato encontrado" : 'Plato no existe',
+      status: menu ? "Plato encontrado" : "Plato no existe",
       data: menu,
     });
   } catch (error) {
@@ -49,11 +48,11 @@ app.get("/v1/menu/:id", async (req, res) => {
 });
 
 //Listar platos por categoria
-app.get("/v1/menu/category/:category", async (req, res) => {
+app.get("/v1/menu/category/:categoria", async (req, res) => {
   try {
-    const menu = await Menu.findById(req.params.category);
+    const menu = await Menu.find({ categoria: req.params.categoria });
     res.status(200).json({
-      status: menu ? "Categoria encontrada" : 'No existe la Categoria',
+      status: menu ? "Categoria encontrada" : "No existe la Categoria",
       data: menu,
     });
   } catch (error) {
@@ -82,14 +81,15 @@ app.post("/v1/menu", async (req, res) => {
 });
 
 //Modificar un plato del menu
-app.patch("/v1/menu/:id", async (req, res) => {
+app.patch("/v1/menu/:cod_plato", async (req, res) => {
   try {
-    const menu = await Menu.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    //const menu = await Menu.update({cod_plato: req.params.cod_plato}, {req.body});
+    const menu = await Menu.find({ categoria: req.params.categoria });
+    menu = Menu(reg.body);
+    const menuSave = await menu.save();
     res.status(200).json({
-      status: menu ? "Se actualizo el plato" : "No existe el plato",
-      data: menu,
+      status: menuSave ? "Se actualizo el plato" : "No existe el plato",
+      data: menuSave,
     });
   } catch (error) {
     res.status(404).json({
@@ -100,13 +100,13 @@ app.patch("/v1/menu/:id", async (req, res) => {
 });
 
 //Eliminar un Plato del menu
-app.delete("/v1/menu/:id", async (req, res) => {
+app.delete("/v1/menu/:cod_plato", async (req, res) => {
   try {
-    const menu = await Menu.findByIdAndDelete(req.params.id);
+    const menu = await Menu.deleteOne({ cod_plato: req.params.cod_plato });
     res.status(200).json({
-        status: menu ? "Se elimino el plato" : "No existe el plato",
-        data: menu,
-      });
+      status: menu ? "Se elimino el plato" : "No existe el plato",
+      data: menu,
+    });
   } catch (error) {
     res.status(404).json({
       status: "No se existe el plato a eliminar",

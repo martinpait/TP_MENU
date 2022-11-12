@@ -6,11 +6,11 @@ Descripción del negocio: Contar con apis para la gestion del la carta (menu) en
 Apis desarrolladas:
 Acción										                HTTP method		URI relativo
 Obtener una lista de todos los platos		      GET		    /v1/menu
-Obtener un plato según el id	                GET		    /v1/menu/:id
-Obtener una lista de platos por categoría	    GET		    /v1/menu/category/:category
+Obtener un plato según el id	                GET		    /v1/menu/:cod_plato
+Obtener una lista de platos por categoría	    GET		    /v1/menu/category/:categoria
 Crear un nuevo plato						              POST		  /v1/menu
-Actualizar un plato							              PATCH		  /v1/menu/:id
-Eliminar un plato	                            DELETE    /v1/menu/:id
+Actualizar un plato							              PATCH		  /v1/menu/:cod_plato
+Eliminar un plato	                            DELETE    /v1/menu/:cod_plato
 
 
 Modelo de la BD
