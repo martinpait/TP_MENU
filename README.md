@@ -54,7 +54,7 @@
     #### **HTTP method**
           GET
     #### **URI relativo**
-          /v1/menu/:cod_plat
+          /v1/menu/:cod_plato
     #### **Detalle de la API**
           Se lista el plato de la base segun el codigo del mismo
     #### **Ejemplo de request y response**
@@ -97,7 +97,7 @@
       Se lista el plato de la base segun el codigo del mismo
     #### **Ejemplo de request y response**
       request:
-        curl --location --request GET 'localhost:3000/v1/menu/categoria:Entrada'
+        curl --location --request GET 'localhost:3000/v1/menu/category/Entrada'
 
       response:
         Status: 200 OK
@@ -212,8 +212,8 @@
 
   #### **Mensaje de error**
      Error: 404
-      {
-        "status": "Plato no encontrado",
+     {
+        "status": "Plato o Nombre de campo no encontrado",
         "data": null
       }
     

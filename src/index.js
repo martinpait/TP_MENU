@@ -15,7 +15,7 @@ app.get("/", (req, res, next) => {
   next();
 });
 
-// rutas de la API
+//Rutas de la API
 //Listar todos los platos del menu
 app.get("/v1/menu", async (req, res) => {
   try {
@@ -41,7 +41,7 @@ app.get("/v1/menu/:cod_plato", async (req, res) => {
     menu
       ? ((statusCode = 200), (statusMesssage = "Plato encontrado con exito"))
       : ((statusCode = 404), (statusMesssage = "Plato no encontrado"));
-    
+
     res.status(statusCode).json({
       status: statusMesssage,
       data: menu,
@@ -60,10 +60,11 @@ app.get("/v1/menu/category/:categoria", async (req, res) => {
     const menu = await Menu.find({
       categoria: req.params.categoria,
     });
-    menu
-      ? ((statusCode = 200), (statusMesssage = "Categoria encontrada con exito"))
+    menu && menu.length > 0
+      ? ((statusCode = 200),
+        (statusMesssage = "Categoria encontrada con exito"))
       : ((statusCode = 404), (statusMesssage = "Categoria no encontrada"));
-    
+
     res.status(statusCode).json({
       status: statusMesssage,
       data: menu,
@@ -103,14 +104,14 @@ app.patch("/v1/menu/:cod_plato", async (req, res) => {
       },
       { new: true }
     );
-    menu
-    ? ((statusCode = 200), (statusMesssage = "Plato actualizado con exito"))
-    : ((statusCode = 404), (statusMesssage = "Plato no encontrado"));
-  
-  res.status(statusCode).json({
-    status: statusMesssage,
-    data: menu,
-  });
+    menu && menu.length > 0
+      ? ((statusCode = 200), (statusMesssage = "Plato actualizado con exito"))
+      : ((statusCode = 404), (statusMesssage = "Plato o Nombre de campo no encontrado"));
+
+    res.status(statusCode).json({
+      status: statusMesssage,
+      data: menu,
+    });
   } catch (error) {
     res.status(500).json({
       status: "Error ",
@@ -126,13 +127,13 @@ app.delete("/v1/menu/:cod_plato", async (req, res) => {
       cod_plato: req.params.cod_plato,
     });
     menu
-    ? ((statusCode = 200), (statusMesssage = "Plato eliminado con exito"))
-    : ((statusCode = 404), (statusMesssage = "Plato no encontrado"));
-  
-  res.status(statusCode).json({
-    status: statusMesssage,
-    data: menu,
-  });
+      ? ((statusCode = 200), (statusMesssage = "Plato eliminado con exito"))
+      : ((statusCode = 404), (statusMesssage = "Plato no encontrado"));
+
+    res.status(statusCode).json({
+      status: statusMesssage,
+      data: menu,
+    });
   } catch (error) {
     res.status(500).json({
       status: "Error",
