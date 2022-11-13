@@ -5,8 +5,8 @@
 ### **Descripción del negocio** 
 **_Bar donde por medio del escaneo de un QR en las mesas se trae la carta (menu). Para lograr eso se crar un conjunto de apis para la gestion de la carta_**
 
-
-### **Apis desarrolladas**
+---
+### **Apis Dsarrolladas**
 1. **Obtener una lista de todos los platos**
     #### **HTTP method**
           GET
@@ -251,14 +251,14 @@
 
     #### **Mensaje de error**
           Error: 404
-          {
-            "status": "Plato no encontrado",
-            "data": null
-          }
-        
-        Error: 500
-          Captura mensaje de error del sistema
-      
+            {
+              "status": "Plato no encontrado",
+              "data": null
+            }
+          
+          Error: 500
+            Captura mensaje de error del sistema
+ ---     
 ### **Modelo de la BD MONGO**
 	cod_plato: {
       type: String,

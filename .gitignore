@@ -2,5 +2,5 @@
 #dependencias node
 node_modules
 
-#import de mongo
+#base de mongo para import en JSON
 manifest.json
