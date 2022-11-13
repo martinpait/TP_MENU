@@ -225,7 +225,7 @@
     #### **HTTP method**
           DELETE
     #### **URI relativo**
-          /v1/menu/:cod_plat
+          /v1/menu/:cod_plato
     #### **Detalle de la API**
           Se elimina el plato de la base segun el codigo del mismo
     #### **Ejemplo de request y response**
