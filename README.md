@@ -184,12 +184,12 @@
     #### **HTTP method**
           PATCH
     #### **URI relativo**
-          /v1/menu/:cod_plat
+          /v1/menu/:cod_plato
     #### **Detalle de la API**
           Se lista el plato de la base segun el codigo del mismo
     #### **Ejemplo de request y response**
           request:
-            curl --location --request PATCH 'localhost:3000/v1/menu/TORCOM(' \
+            curl --location --request PATCH 'localhost:3000/v1/menu/TORCOM' \
               --header 'Content-Type: application/json' \
               --data-raw '{
                             "activo": false
