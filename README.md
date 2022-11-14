@@ -192,7 +192,7 @@
             curl --location --request PATCH 'localhost:3000/v1/menu/TORCOM' \
               --header 'Content-Type: application/json' \
               --data-raw '{
-                            "activo": false
+                            "activo": falsenpm
                           }'
           response:
             Status: 200 OK      
